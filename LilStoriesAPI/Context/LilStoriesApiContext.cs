@@ -9,6 +9,12 @@ namespace LilStoriesAPI.Context
         {
         }
 
-        public DbSet<Story> Stories { get; set; }   
+        public DbSet<Story> Stories { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);            
+        }
     }
 }
