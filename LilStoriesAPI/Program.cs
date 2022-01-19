@@ -1,4 +1,6 @@
 using LilStoriesAPI.Context;
+using LilStoriesAPI.Repository;
+using LilStoriesAPI.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddScoped<IBaseRepository, BaseRepository>();
+builder.Services.AddScoped<IStoryRepository, StoryRepository>();
 builder.Services.AddDbContext<LilStoriesApiContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default"),
