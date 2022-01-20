@@ -31,8 +31,7 @@ namespace LilStoriesAPI.Repository.Interfaces
 
         public async Task<Story> GetStoriesByIdAsync(int id)
         {
-            var story = await _context.Stories.Where(x => x.Id == id).FirstOrDefaultAsync();
-            //SingleOrDefaultAsync(st => st.Id == id);
+            var story = await _context.Stories.SingleOrDefaultAsync(st => st.Id == id);
             return story;
         }
     }

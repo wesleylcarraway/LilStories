@@ -69,5 +69,21 @@ namespace LilStoriesAPI.Controllers
                 ? Ok("story updated with success")
                 : BadRequest("error updating story");
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (id <= 0) return BadRequest("invalid story");
+
+            var storyDelete = await _repository.GetStoriesByIdAsync(id);
+
+            if (storyDelete == null) return NotFound("story not found");
+
+            _repository.Delete(storyDelete);
+
+            return await _repository.SaveChangesAsync()
+                 ? Ok("story deleted with success")
+                 : BadRequest("error deleting story");
+        }
     }
 }

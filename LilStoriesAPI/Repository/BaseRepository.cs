@@ -18,7 +18,7 @@ namespace LilStoriesAPI.Repository
 
         public void Delete<T>(T entity) where T : class
         {
-            throw new NotImplementedException();
+            _context.Remove(entity);
         }
 
         public async Task<bool> SaveChangesAsync()
