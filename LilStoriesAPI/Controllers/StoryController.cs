@@ -39,5 +39,19 @@ namespace LilStoriesAPI.Controllers
                     ? Ok(storyReturn)
                     : BadRequest("Story not find");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Post(StoryAddDto story)
+        {
+            if (story == null) return BadRequest("Invalid data");
+
+            var storyAdd = _mapper.Map<Story>(story);
+
+            _repository.Add(storyAdd);
+
+            return await _repository.SaveChangesAsync()
+                ? Ok("Story added with success")
+                : BadRequest("Error saving story");
+        }
     }
 }

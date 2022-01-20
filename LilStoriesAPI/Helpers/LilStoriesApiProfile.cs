@@ -9,6 +9,7 @@ namespace LilStoriesAPI.Helpers
         public LilStoriesApiProfile()
         {
             CreateMap<Story, StoryDto>();
+            CreateMap<StoryAddDto, Story>();
         }
     }
 }
