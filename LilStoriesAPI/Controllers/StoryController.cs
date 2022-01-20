@@ -1,4 +1,7 @@
-﻿using LilStoriesAPI.Repository.Interfaces;
+﻿using AutoMapper;
+using LilStoriesAPI.Models.Dtos;
+using LilStoriesAPI.Models.Entities;
+using LilStoriesAPI.Repository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LilStoriesAPI.Controllers
@@ -8,16 +11,19 @@ namespace LilStoriesAPI.Controllers
     public class StoryController : ControllerBase
     {
         private readonly IStoryRepository _repository;
+        private readonly IMapper _mapper;
 
-        public StoryController(IStoryRepository repository)
+        public StoryController(IStoryRepository repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
             var stories = await _repository.GetStoriesAsync();
+
             return stories.Any()
                 ? Ok(stories) : BadRequest("There are no stories");
         }
@@ -27,8 +33,10 @@ namespace LilStoriesAPI.Controllers
         {
             var story = await _repository.GetStoriesByIdAsync(id);
 
-            return story != null
-                    ? Ok(story)
+            var storyReturn = _mapper.Map<StoryDto>(story);
+
+            return storyReturn != null
+                    ? Ok(storyReturn)
                     : BadRequest("Story not find");
         }
     }

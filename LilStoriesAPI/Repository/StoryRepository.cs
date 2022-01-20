@@ -1,4 +1,5 @@
 ﻿using LilStoriesAPI.Context;
+using LilStoriesAPI.Models.Dtos;
 using LilStoriesAPI.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,9 +13,19 @@ namespace LilStoriesAPI.Repository.Interfaces
             _context = context;
         }
 
-        public async Task<IEnumerable<Story>> GetStoriesAsync()
+        public async Task<IEnumerable<StoryDto>> GetStoriesAsync()
         {
-            var stories = await _context.Stories.ToListAsync();
+            var stories = await _context.Stories
+                .Select(x => new StoryDto
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    Genre = x.Genre,
+                    Author = x.Author,
+                    Content = x.Content
+                })
+                .ToListAsync();
+
             return stories;
         }
 

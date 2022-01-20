@@ -1,10 +1,11 @@
-﻿using LilStoriesAPI.Models.Entities;
+﻿using LilStoriesAPI.Models.Dtos;
+using LilStoriesAPI.Models.Entities;
 
 namespace LilStoriesAPI.Repository.Interfaces
 {
     public interface IStoryRepository : IBaseRepository
     {
-        Task<IEnumerable<Story>> GetStoriesAsync();
+        Task<IEnumerable<StoryDto>> GetStoriesAsync();
         Task<Story> GetStoriesByIdAsync(int id);
     }
 }
