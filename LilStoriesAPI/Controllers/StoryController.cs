@@ -25,7 +25,7 @@ namespace LilStoriesAPI.Controllers
             var stories = await _repository.GetStoriesAsync();
 
             return stories.Any()
-                ? Ok(stories) : BadRequest("There are no stories");
+                ? Ok(stories) : BadRequest("there are no stories");
         }
 
         [HttpGet("{id}")]
@@ -37,7 +37,7 @@ namespace LilStoriesAPI.Controllers
 
             return storyReturn != null
                     ? Ok(storyReturn)
-                    : BadRequest("Story not find");
+                    : BadRequest("story not find");
         }
 
         [HttpPost]
@@ -50,8 +50,24 @@ namespace LilStoriesAPI.Controllers
             _repository.Add(storyAdd);
 
             return await _repository.SaveChangesAsync()
-                ? Ok("Story added with success")
-                : BadRequest("Error saving story");
+                ? Ok("story added with success")
+                : BadRequest("error saving story");
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, StoryUpdateDto story)
+        {
+            if (id <= 0) return BadRequest("uninformed user");
+
+            var storyDb = await _repository.GetStoriesByIdAsync(id);
+
+            var storyUpdate = _mapper.Map(story, storyDb);
+
+            _repository.Update(storyUpdate);
+
+            return await _repository.SaveChangesAsync()
+                ? Ok("story updated with success")
+                : BadRequest("error updating story");
         }
     }
 }

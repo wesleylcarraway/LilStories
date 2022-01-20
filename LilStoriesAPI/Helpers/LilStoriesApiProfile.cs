@@ -8,8 +8,10 @@ namespace LilStoriesAPI.Helpers
     {
         public LilStoriesApiProfile()
         {
-            CreateMap<Story, StoryDto>();
+            CreateMap<Story, StoryDto>().ReverseMap();
             CreateMap<StoryAddDto, Story>();
+            CreateMap<StoryUpdateDto, Story>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
         }
     }
 }

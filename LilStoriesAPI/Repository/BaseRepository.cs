@@ -28,7 +28,7 @@ namespace LilStoriesAPI.Repository
 
         public void Update<T>(T entity) where T : class
         {
-            throw new NotImplementedException();
+            _context.Update(entity);
         }
     }
 }
